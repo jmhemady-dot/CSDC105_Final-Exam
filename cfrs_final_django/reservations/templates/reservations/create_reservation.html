@@ -1,0 +1,144 @@
+{% extends 'layouts/app_base.html' %}
+{% load static %}
+{% block title %}Create Facitlity Reservation{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0" style="margin-top: 10px">
+                <div class="card-header text-primary d-flex justify-content-between align-items-center" id="card-table-hearder">
+                    <label class="mb-0">
+                        CREATE FACILITY RESERVATION
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div id="alert-section" class="alert d-none" role="alert">
+                        Message
+                    </div>
+
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select id="facility_id" class="form-control form-control-sm">
+                                    {% for f in facilities %}
+                                        <option value="{{ f.facility_id }}">
+                                            {{ f.facility_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <label>Role<strong class="text-danger">*</strong></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="date" id="date" class="form-control form-control-sm" placeholder=" " autocomplete="off">
+                                <label for="date">Date <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="time" id="start_time" class="form-control form-control-sm" placeholder=" " autocomplete="off">
+                                <label for="start_time">Start Time <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="time" id="end_time" class="form-control form-control-sm" placeholder=" " autocomplete="off">
+                                <label for="end_time">End Time <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" id="attendees" class="form-control form-control-sm text-center" placeholder=" " autocomplete="off">
+                                <label for="attendees">Attendees <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="purpose" class="form-control form-control-sm" placeholder=" " autocomplete="off">
+                                <label for="purpose">Purpose <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-gray-light d-flex justify-content-end">
+                    <button type="submit"
+                            class="btn btn-default btn-sm"
+                            onclick="confirmSave()"
+                            id="card-button-footer">
+                        <i class="fa fa-save mr-1"></i> Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function confirmSave() {
+        showConfirmation({
+            title: "Save New Reservation",
+            message: "Continue Saving?",
+            subMessage: "",
+            confirmText: "Yes, Save",
+            confirmClass: "btn-success",
+            icon: "fa-save",
+            iconColor: "text-success",
+            onConfirm: function () {
+                SaveReservation();
+            }
+        });
+    }
+
+    function SaveReservation() {
+
+    if (!$('#facility_id').val() || !$('#date').val()) {
+        showAlert("Please fill required fields", "error");
+        return;
+    }
+
+    $.ajax({
+            url: "{% url 'add_reservation' %}",
+            type: "POST",
+            data: {
+                facility_id: $('#facility_id').val(),
+                date: $('#date').val(),
+                start_time: $('#start_time').val(),
+                end_time: $('#end_time').val(),
+                attendees: $('#attendees').val(),
+                purpose: $('#purpose').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+
+            success: function(response) {
+
+                showAlert(response.message, "success");
+
+                if (response.status === "success") {
+                    setTimeout(function(){
+                        window.location.href =
+                            "{% url 'create_reservation' %}";
+
+                    }, 3000);
+                }
+
+            },
+
+            error: function(xhr) {
+                console.log(xhr.responseText);
+                showAlert("Error occurred", "error");
+            }
+        });
+
+    }
+</script>
+{% endblock %}

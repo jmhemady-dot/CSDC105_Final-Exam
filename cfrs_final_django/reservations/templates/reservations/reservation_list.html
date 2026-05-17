@@ -1,0 +1,265 @@
+{% extends 'layouts/app_base.html' %}
+{% load static %}
+{% block title %}Reservation List{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<div class="container-fluid mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0" style="margin-top: 10px">
+                <div class="card-header text-primary d-flex justify-content-between align-items-center" id="card-table-hearder">
+                    <label class="mb-0">
+                        RESERVATION REQUEST LIST
+                    </label>
+
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary active"
+                                id="tableViewBtn">
+                            <i class="fas fa-table"></i>
+                        </button>
+
+                        <button class="btn btn-sm btn-outline-secondary"
+                                id="calendarViewBtn">
+                            <i class="fas fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="alert-section" class="alert d-none" role="alert">
+                        Message
+                    </div>
+
+                    <div id="tableView" class="card shadow-sm border-0">
+                        <div class="card-body p-2">
+                            <div class="table-responsive">
+                                <table id="tableData" class="table table-sm w-100 text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Reservation ID</th>
+                                            <th>Facility Name</th>
+                                            <th>Requested By</th>
+                                            <th class="text-center">Date</th>
+                                            <th class="text-center">Time</th>
+                                            <th class="text-center">Attendees</th>
+                                            <th>Purpose</th>
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for r in reservations %}
+                                            <tr>
+                                                <td class="text-center">{{ r.reservation_id }}</td>
+                                                <td>{{ r.facility.facility_name }}</td>
+                                                <td>{{ r.requestor.first_name }} {{ r.requestor.last_name }}</td>
+                                                <td class="text-center">{{ r.date }}</td>
+                                                <td class="text-center">{{ r.start_time }} - {{ r.end_time }}</td>
+                                                <td class="text-center">{{ r.attendees }}</td>
+                                                <td>{{ r.purpose }}</td>
+                                                <td class="text-center">
+                                                    {% if r.status == "pending" %}
+                                                        <span class="badge bg-warning">Pending</span>
+                                                    {% elif r.status == "approved" %}
+                                                        <span class="badge bg-success">Approved</span>
+                                                    {% elif r.status == "rejected" %}
+                                                        <span class="badge bg-danger">Rejected</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    {% if r.status == "pending" %}
+
+                                                        <button type="button"
+                                                            class="btn btn-xs btn-outline-secondary py-0 px-2"
+                                                            onclick="confirmApprove('{{ r.reservation_id }}')">
+                                                            Approve
+                                                        </button>
+
+                                                        <button type="button"
+                                                            class="btn btn-xs btn-outline-danger py-0 px-2"
+                                                            onclick="confirmReject('{{ r.reservation_id }}')">
+                                                            Reject
+                                                        </button>
+
+                                                    {% else %}
+                                                        {% if r.status == "approved" %}
+                                                            <span class="badge bg-success">Approved</span>
+                                                        {% elif r.status == "rejected" %}
+                                                            <span class="badge bg-danger">Rejected</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="9" class="text-center">No reservations found.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                 
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CALENDAR VIEW -->
+                    <div id="calendarView" class="d-none mt-3">
+                        <div id="reservationCalendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function confirmApprove(reservation_id) {
+        showConfirmation({
+            title: "Approve Reservation #" + reservation_id + "?",
+            message: "Continue Approving?",
+            subMessage: "",
+            confirmText: "Yes, Approve",
+            confirmClass: "btn-success",
+            icon: "fa-check",
+            iconColor: "text-success",
+            onConfirm: function () {
+                ApproveRequest(reservation_id);
+            }
+        });
+    }
+
+    function confirmReject(reservation_id) {
+        showConfirmation({
+            title: "Reject Reservation #" + reservation_id + "?",
+            message: "Continue Approving?",
+            subMessage: "",
+            confirmText: "Yes, Reject",
+            confirmClass: "btn-danger",
+            icon: "fa-times",
+            iconColor: "text-danger",
+            onConfirm: function () {
+                RejectRequest(reservation_id);
+            }
+        });
+    }
+
+    function ApproveRequest(reservation_id)
+    {
+         $.ajax({
+            url: "{% url 'approve_request' %}",
+            type: "POST",
+
+            data: {
+                reservation_id: reservation_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+
+                showAlert("Request Successfully Approved", "success");
+
+                setTimeout(function(){
+                    window.location.href =
+                        "{% url 'reservation_list' %}";
+
+                }, 3000);
+            },
+            error: function (xhr) {
+
+                showAlert("Error approving request", "error");
+                console.log(xhr.responseText);
+            }
+
+        });
+    }
+
+    function RejectRequest(reservation_id)
+    {
+         $.ajax({
+            url: "{% url 'reject_request' %}",
+            type: "POST",
+
+            data: {
+                reservation_id: reservation_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+
+                showAlert("Request Successfully Rejected", "success");
+
+                setTimeout(function(){
+                    window.location.href =
+                        "{% url 'reservation_list' %}";
+
+                }, 3000);
+            },
+            error: function (xhr) {
+
+                showAlert("Error rejecting request", "error");
+                console.log(xhr.responseText);
+            }
+
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const tableView = document.getElementById('tableView');
+    const calendarView = document.getElementById('calendarView');
+
+    const tableViewBtn = document.getElementById('tableViewBtn');
+    const calendarViewBtn = document.getElementById('calendarViewBtn');
+
+    // INIT CALENDAR
+    const calendarEl = document.getElementById('reservationCalendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: 750,
+
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+
+        // 🔥 AJAX EVENTS
+        events: {
+            url: "{% url 'reservation_events' %}",
+            method: "GET"
+        },
+
+        eventClick: function(info) {
+            alert(
+                "Facility: " + info.event.title + "\n" +
+                "Purpose: " + info.event.extendedProps.purpose + "\n" +
+                "Attendees: " + info.event.extendedProps.attendees + "\n" +
+                "Status: " + info.event.extendedProps.status
+            );
+        }
+    });
+
+    calendar.render();
+
+    // TOGGLE VIEW
+    tableViewBtn.addEventListener('click', function () {
+        tableView.classList.remove('d-none');
+        calendarView.classList.add('d-none');
+
+        tableViewBtn.classList.add('active');
+        calendarViewBtn.classList.remove('active');
+    });
+
+    calendarViewBtn.addEventListener('click', function () {
+        tableView.classList.add('d-none');
+        calendarView.classList.remove('d-none');
+
+        calendar.updateSize(); // IMPORTANT
+        calendarViewBtn.classList.add('active');
+        tableViewBtn.classList.remove('active');
+    });
+
+});
+</script>
+
+{% endblock %}

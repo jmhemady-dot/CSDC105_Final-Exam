@@ -1,0 +1,561 @@
+﻿#tableData tbody tr:hover {
+    background-color: lightgoldenrodyellow;
+    transition: 0.2s ease-in-out;
+}
+
+.dashboard-landing {
+    min-height: 90vh;
+    background-color: white;
+}
+
+/* Main Card */
+.landing-card {
+    width: 1000px;
+    padding: 60px 50px;
+    background: #EEEEEE;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+}
+
+    /* Soft Hover Animation */
+    .landing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+    }
+
+/* Logo */
+.landing-logo {
+    width: 220px;
+    display: block;
+    margin: 0 auto 30px auto;
+    transition: transform 0.4s ease;
+    margin-bottom: -20px;
+}
+
+/* Logo subtle zoom on hover */
+.landing-card:hover .landing-logo {
+    transform: scale(1.05);
+}
+
+/* Title */
+.landing-title {
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Subtitle */
+.landing-subtitle {
+    color: #6c757d;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+/* Welcome text */
+.welcome-text {
+    font-size: 18px;
+    color: #4e73df;
+    font-weight: 500;
+}
+
+.dashboard-date {
+    font-size: 14px;
+    color: #6c757d;
+    letter-spacing: 1px;
+}
+
+.dashboard-time-large {
+    font-size: 28px;
+    font-weight: 700;
+    color: #4e73df;
+}
+
+
+.quick-card {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    width: 220px;
+    height: 120px;
+    color: #495057;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+    .quick-card:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        text-decoration: none;
+        color: #212529;
+    }
+
+    .quick-card i {
+        color: #0d6efd; /* primary icon color */
+    }
+
+.modal.fade .modal-dialog {
+    transform: scale(0.9);
+    transition: all 0.25s ease-in-out;
+}
+
+.modal.fade.show .modal-dialog {
+    transform: scale(1);
+}
+
+.btn-loading {
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+    .btn-loading .spinner-border {
+        width: 1rem;
+        height: 1rem;
+        border-width: 0.15em;
+        margin-right: 6px;
+    }
+
+#global-confirm-modal .modal-dialog {
+    transform: translateY(-40px) scale(0.9);
+}
+
+#global-confirm-modal.show .modal-dialog {
+    transform: translateY(-40px) scale(1);
+}
+
+.timeline-wrapper {
+    position: relative;
+    padding-left: 35px;
+}
+
+    /* Vertical line */
+    .timeline-wrapper::before {
+        content: '';
+        position: absolute;
+        left: 14px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e9ecef;
+    }
+
+/* Each item */
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Red circle */
+.timeline-marker {
+    position: absolute;
+    left: -21px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    background: #dc3545;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #dc3545;
+}
+
+/* Date styling */
+.timeline-date {
+    font-size: 12px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Details styling */
+.timeline-text {
+    font-size: 14px;
+    margin-top: 4px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+/* Subtle hover */
+.timeline-item:hover .timeline-text {
+    color: #dc3545;
+}
+
+
+/* Slightly higher modal position */
+.custom-followup-modal .modal-dialog {
+    margin-top: 8vh;
+}
+
+/* Entrance animation */
+.custom-followup-modal .modal-content {
+    animation: modalZoomIn 0.25s ease;
+}
+
+/* Icon circle */
+.followup-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #fff3cd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #f39c12;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.brand-text-small {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.user-dropdown {
+    min-width: 260px; /* makes it wider */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.user-dropdown .dropdown-header {
+    border-bottom: 1px solid #eee;
+}
+
+/* ===== Avatar ===== */
+.avatar-wrapper {
+    position: relative;
+}
+
+.avatar-img {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-lg {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Online status dot */
+.status-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    height: 10px;
+    width: 10px;
+    background: #28c76f;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+/* ===== Modern Dropdown ===== */
+.user-dropdown {
+    min-width: 280px;
+    border: none;
+    border-radius: 14px;
+    padding: 0;
+    margin-top: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+    display: block;
+    pointer-events: none;
+}
+
+/* Smooth Fade + Slide */
+.show > .user-dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Header Section */
+.user-header {
+    padding: 28px 20px 20px 20px;
+    background: #ffffff;
+}
+
+/* Divider */
+.dropdown-divider {
+    margin: 0;
+}
+
+/* Logout Button */
+.logout-item {
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+    .logout-item:hover {
+        background: #f5f7fa;
+        color: #ff4d4f;
+    }
+
+/* ===== NAVBAR BASE ===== */
+.main-header {
+    background-color: #373A40 !important;
+}
+
+/* ===== NAV LINKS ===== */
+.main-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #d1d5db !important; /* soft light gray */
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+/* Icon styling */
+.nav-icon {
+    font-size: 15px;
+    width: 18px;
+    text-align: center;
+}
+
+/* Hover effect */
+.main-nav .nav-link:hover {
+    background-color: rgba(255,255,255,0.08);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+/* Active link */
+.main-nav .nav-link.active {
+    color: #ffffff !important;
+    background-color: lightblue;
+}
+
+/* Modern left accent indicator */
+.main-nav .nav-link.active::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 4px;
+    background: #0d6efd; /* orange accent */
+    border-radius: 4px;
+}
+
+/* Remove default Bootstrap focus glow */
+.nav-link:focus {
+    box-shadow: none;
+}
+
+/* ===== NAVBAR BACKGROUND ===== */
+.main-header {
+    background-color: #373A40 !important;
+}
+
+/* ===== CENTER MENU ===== */
+.main-nav {
+    gap: 12px;
+}
+
+/* Nav Links */
+.main-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #cfd3da !important;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+/* Icons */
+.nav-icon {
+    font-size: 15px;
+    width: 18px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+/* Hover */
+.main-nav .nav-link:hover {
+    background-color: rgba(255,255,255,0.08);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.main-nav .nav-link:hover .nav-icon {
+    transform: scale(1.1);
+}
+
+/* ACTIVE ITEM */
+.main-nav .nav-link.active {
+    background-color: steelblue;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px lightblue;
+}
+
+/* Subtle glow animation */
+.main-nav .nav-link.active {
+    animation: activeGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes activeGlow {
+    from {
+        box-shadow: 0 0 8px steelblue;
+    }
+
+    to {
+        box-shadow: 0 0 18px lightblue;
+    }
+}
+
+/* Remove default focus */
+.nav-link:focus {
+    box-shadow: none;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* full viewport height */
+}
+
+.content {
+    flex: 1; /* takes all available space */
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1; /* fill remaining space inside .content */
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.3); /* subtle shadow */
+    max-width: 80%; /* wider but not full width */
+}
+
+#card-table-hearder {
+    background: #EEEEEE;
+}
+
+#card-button-footer {
+    color: blue;
+}
+
+.form-floating {
+    position: relative;
+}
+
+    .form-floating input,
+    .form-floating select {
+        height: 38px;
+        padding: 12px 8px 4px 8px;
+    }
+
+    .form-floating label {
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        font-size: 12px;
+        color: #6c757d;
+        transition: 0.2s ease all;
+        pointer-events: none;
+    }
+
+    .form-floating input:focus + label,
+    .form-floating input:not(:placeholder-shown) + label,
+    .form-floating select:focus + label,
+    .form-floating select:not([value=""]) + label {
+        top: -8px;
+        left: 8px;
+        font-size: 10px;
+        background: #fff;
+        padding: 0 4px;
+        color: #6c757d;
+    }
+
+    .form-floating input:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+    }
+
+/*FOR DATA TABLES*/
+
+/* Table container */
+#tableData {
+    font-size: 13px;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+
+    /* Header */
+    #tableData thead th {
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #6c757d;
+        padding: 8px 10px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: lightgray;
+    }
+
+    /* Rows */
+    #tableData tbody td {
+        padding: 6px 10px;
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    /* Hover effect */
+    #tableData tbody tr:hover {
+        /*background-color: #f8f9fa;*/
+        background-color: khaki;
+    }
+
+    /* Remove borders */
+    #tableData.no-footer {
+        border-bottom: none;
+    }
+
+.dataTables_paginate {
+    margin-top: 10px;
+    text-align: right;
+}
+
+    .dataTables_paginate .paginate_button {
+        border: none !important;
+        background: #f1f3f5 !important;
+        margin: 0 2px;
+        border-radius: 10px;
+        font-size: 12px;
+        color: #495057 !important;
+    }
+
+        .dataTables_paginate .paginate_button.current {
+            background: #0d6efd !important;
+            color: orange !important;
+        }
+
+        .dataTables_paginate .paginate_button:hover {
+            background: #dee2e6 !important;
+            color: #000 !important;
+        }

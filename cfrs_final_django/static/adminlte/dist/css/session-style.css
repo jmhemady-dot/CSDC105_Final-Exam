@@ -1,0 +1,84 @@
+﻿body {
+    background-color: #e8f0f7;
+    margin: 0;
+}
+
+.dashboard-landing {
+    min-height: 90vh;
+    background: linear-gradient(135deg, #f4f6f9, #e3edf7);
+}
+
+/* Main Card */
+.landing-card {
+    width: 650px;
+    padding: 60px 50px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    */ transition: all 0.35s ease;
+    border: 0.5px solid red;
+    box-shadow: 0 0 15px rgba(255,0,0,0.5);
+}
+
+    /* Soft Hover Animation */
+    .landing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+    }
+
+/* Logo */
+.landing-logo {
+    width: 220px;
+    display: block;
+    margin: 0 auto 30px auto;
+    transition: transform 0.4s ease;
+}
+
+/* Logo subtle zoom on hover */
+.landing-card:hover .landing-logo {
+    transform: scale(1.05);
+}
+
+/* Title */
+.landing-title {
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Subtitle */
+.landing-subtitle {
+    color: #6c757d;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+/* Welcome text */
+.welcome-text {
+    font-size: 15px;
+    color: #4e73df;
+    font-weight: 500;
+}
+
+.dashboard-date {
+    font-size: 14px;
+    color: #6c757d;
+    letter-spacing: 1px;
+}
+
+.dashboard-time-large {
+    font-size: 28px;
+    font-weight: 700;
+    color: #4e73df;
+}
+
+.session-card {
+    max-width: 400px;
+    width: 100%;
+}
+
+    .session-card:hover {
+        box-shadow: 0 0 20px rgba(255,0,0,0.3);
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }

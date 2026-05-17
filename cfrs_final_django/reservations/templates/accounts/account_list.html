@@ -1,0 +1,134 @@
+{% extends 'layouts/app_base.html' %}
+{% load static %}
+{% block title %}Account List{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0" style="margin-top: 10px">
+                <div class="card-header text-primary d-flex justify-content-between align-items-center" id="card-table-hearder">
+                    <label class="mb-0">
+                        MANAGE USERS
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div id="alert-section" class="alert d-none" role="alert">
+                        Message
+                    </div>
+
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-2">
+                            <div class="table-responsive">
+                                <table id="tableData" class="table table-sm w-100 text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">User ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th class="text-center">Username</th>
+                                            <th class="text-center">Role</th>
+                                            <th class="text-center font-weight-bold ">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user in users %}
+
+                                            <tr>
+                                                <td class="text-center">{{ user.id }}</td>
+                                                <td> {{ user.first_name }} {{ user.last_name }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td class="text-center">{{ user.username }}</td>
+                                                <td class="text-center">
+                                                    {% if user.profile.role_id == 1 %}
+                                                        Admin
+                                                    {% elif user.profile.role_id == 2 %}
+                                                        Requestor
+                                                    {% elif user.profile.role_id == 3 %}
+                                                        Approver
+                                                    {% else %}
+                                                        No Role
+                                                    {% endif %}
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <a href="{% url 'edit_account' user.id %}"
+                                                        class="btn btn-xs btn-outline-secondary py-0 px-2">
+                                                        Edit
+                                                    </a>
+
+                                                    <button type="button"
+                                                        class="btn btn-xs btn-outline-danger py-0 px-2"
+                                                        onclick="confirmDelete('{{ user.id }}')">
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-gray-light d-flex justify-content-end">
+                    <a href="{% url 'add_account' %}" class="btn btn-default btn-sm mr-2" title="Add User" onclick="ShowLoading()"id="card-button-footer">
+                        <i class="fa fa-plus"></i> Add User
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function confirmDelete(user_id) {
+        showConfirmation({
+            title: "Delete User #" + user_id + "?",
+            message: "Continue Deleting?",
+            subMessage: "",
+            confirmText: "Yes, Delete",
+            confirmClass: "btn-danger",
+            icon: "fa-trash",
+            iconColor: "text-danger",
+            onConfirm: function () {
+                DeleteUser(user_id);
+            }
+        });
+    }
+
+    function DeleteUser(user_id)
+    {
+        $.ajax({
+
+            url: "{% url 'delete_account' %}",
+            type: "POST",
+
+            data: {
+                user_id: user_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+
+                showAlert("User Deleted Successfully", "success");
+
+                setTimeout(function(){
+                    window.location.href =
+                        "{% url 'account_list' %}";
+
+                }, 3000);
+            },
+            error: function (xhr) {
+
+                showAlert("Error deleting user", "error");
+
+                console.log(xhr.responseText);
+            }
+
+        });
+    }
+</script>
+
+{% endblock %}

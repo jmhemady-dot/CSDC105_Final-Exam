@@ -1,0 +1,51 @@
+{% extends 'layouts/app_base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="content dashboard-landing d-flex align-items-center justify-content-center">
+    <div class="landing-card text-center">
+        <img src="{% static 'adminlte/dist/img/adnu.png' %}"
+             class="landing-logo" />
+
+        <h1 class="landing-title" style="margin-top: 50px;"> ADNU - CFRS </h1>
+
+        <p class="landing-subtitle">
+            CAMPUS FACILITY RESERVATION SYSTEM
+        </p>
+
+        <div class="welcome-text"> Welcome, {{ request.user.username }} </div>
+        
+        <div class="dashboard-datetime mt-3">
+            <div id="currentDate" class="dashboard-date"></div>
+            <div id="currentTime" class="dashboard-time-large"></div>
+        </div>
+
+        <p class="landing-subtitle" style="font-size: 14px; margin-top: 20px;">
+            Copyright © 2026 CFRS All rights reserved.
+        </p>
+    </div>
+</section>
+
+<script type="text/javascript">
+    setInterval(function () {
+        var now = new Date();
+
+        document.getElementById("currentDate").innerHTML =
+            now.toLocaleDateString(undefined, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+        document.getElementById("currentTime").innerHTML =
+            now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+    }, 1000);
+
+</script>
+
+{% endblock %}
